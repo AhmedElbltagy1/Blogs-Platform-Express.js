@@ -9,4 +9,4 @@ const addcomment =  async (req, res) => {
 }
 
 
-module.exports = {addcomment};
+module.exports = addcomment
