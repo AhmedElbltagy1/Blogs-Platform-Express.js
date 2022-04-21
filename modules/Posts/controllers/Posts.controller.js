@@ -4,7 +4,7 @@ const Comment = require("../../../DataBase/Models/Comments.model");
 
 
 
-const getPosts =async (req,res)=>{
+const GetPosts =async (req,res)=>{
         const newComments =[]; //the comments of the Post
         const cursor = Post.find({}).cursor();
         for(let doc= await cursor.next();doc!=null;doc=await cursor.next()){
@@ -32,6 +32,7 @@ const CreatePost =async(req,res)=>{
     const data =await Post.insertMany({title,description,userId:req.user.id,postImage:imageUrl})
     res.json({message:"added"})
 }
+
 const updatePost = async(req,res)=>{
     const{id} = req.params; 
     let selectedPost = await Post.findById(id)
@@ -47,6 +48,7 @@ const updatePost = async(req,res)=>{
     }
     
 }
+
 const deletePost =async (req,res)=>{
     const {id} = req.params ;
     let selectedPost = await Post.findById(id)
@@ -61,4 +63,4 @@ const deletePost =async (req,res)=>{
 }
 
 
-module.exports = {getPosts,getSinglePost,CreatePost,updatePost,deletePost};
+module.exports = {GetPosts,getSinglePost,CreatePost,updatePost,deletePost};

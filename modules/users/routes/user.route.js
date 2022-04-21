@@ -1,22 +1,25 @@
-const app = require("express").Router();
-const {Allusers,deleteuser,updateuser}= require("../controllers/user.controller");
-const {isAuth,isValid,signInValid,RegisterValid,signIn,Register}= require("../usersRouter/users.Router")
+const router = require("express").Router();
+
+const {Allusers,deleteuser,updateuser
+    ,ProfilePicture,Register,signIn
+}= require("../controllers/user.controller");
+
+const {isAuth,isValid,signInValid,RegisterValid}= require("../users.router");
+
 const upload = require("../../../Middleware/multer.ProfilePic");
+
 const multer = require("multer");
-const ProfilePicture = require("../controllers/profileImage.controller");
 
+router.get("/Allusers",isAuth(),Allusers);
 
+router.put("/updateuser/:id",isAuth(),updateuser);
 
-app.get("/Allusers",isAuth(),Allusers);
+router.delete("/deleteuser/:id",deleteuser);
 
-app.put("/updateuser/:id",isAuth(),updateuser);
+router.post("/signIn",isValid(signInValid),signIn)
 
-app.delete("/deleteuser/:id",deleteuser);
+router.post("/Register",isValid(RegisterValid),Register)
 
-app.post("/signIn",isValid(signInValid),signIn)
+router.post("/ProfilePicture",isAuth(),upload.single("image"),ProfilePicture);
 
-app.post("/Register",isValid(RegisterValid),Register)
-
-app.post("/ProfilePicture",isAuth(),upload.single("image"),ProfilePicture);
-
-module.exports = app;
+module.exports = router;
