@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const multer = require("multer");
 
-const {Allusers,deleteuser,updateuser,ProfilePicture,Register,signIn}
+const { Getuser,Getusers,deleteuser,updateuser,ProfilePicture,Register,signIn}
 =require("../controllers/user.controller");
 
 
@@ -12,9 +12,9 @@ const {RegisterValid,signInValid}= require("../../validation/user.validation");
 const upload = require("../../../Middleware/multer.ProfilePic");
 
 
-
-router.get("/Allusers",isAuth(),Allusers);
-router.put("/updateuser/:id",isAuth(),updateuser);
+router.get("/user/:id",Getuser)
+router.get("/Allusers",isAuth(),Getusers);
+router.put("/updateuser/:id",updateuser);
 router.delete("/deleteuser/:id",deleteuser);
 router.post("/signIn",isValid(signInValid),signIn)
 router.post("/Register",isValid(RegisterValid),Register)

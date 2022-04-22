@@ -4,32 +4,29 @@ const multer = require('multer');
 const jwt = require("jsonwebtoken");
 
 
-const Allusers = async (req, res) => {
-    let data = [];
-    if (req.user.role =="admin") {
-     data = await User.find({}); 
-    }else{
-        data = await User.findOne({email:req.user.email})
+const Getusers = async (req, res) => {
+    if (req.user.role == "admin") {
+    const data = await User.find({}).select("-password"); 
+     res.json({ message: "success", data })
     }
-    res.json({ message: "success", data })
+     res.json({message:"only admins allowed to see the users "})   
 }
-
+const Getuser = async (req,res)=>{
+    const userId = req.params.id
+    let user = await User.findById({_id:userId})
+    res.json({message:"done",user})
+}
 
 const updateuser = async (req, res) => {
-    const {id} = req.params;
-    const userRole = await User.findById({_id:req.user.id})
-    if (userRole.role =="admin") {
-       const updateduser = await userModel.updateOne({ _id: id })
-        res.json({message:"updated",updateduser})
-    }else{
-        res.send("your not allowed")
-    }
-    
+    const userId = req.params.id
+    var user = await User.findByIdAndUpdate({_id:userId},{name:req.body.name})
+    var updateuser = await User.findById({_id:userId})
+    res.json({message:"updated",updateuser})   
 }
 const deleteuser = async (req, res) => {
-    const { id } = req.params;
-    await userModel.deleteOne({ _id: id })
-    res.send("deleted");
+    const userId = req.params.id
+    await User.deleteOne({ _id:userId })
+    res.json({message:"user deleted"})
 }
 
 const ProfilePicture = async (req, res) => {
@@ -90,6 +87,6 @@ const signIn =async (req,res)=>{
 }
 
 
-module.exports = { Allusers, updateuser, deleteuser,ProfilePicture,Register,signIn}
+module.exports = { Getuser,Getusers, updateuser, deleteuser,ProfilePicture,Register,signIn}
 
 
