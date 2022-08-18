@@ -1,5 +1,5 @@
-const Post = require("../../../DataBase/Models/Posts.model");
-const Comment = require("../../../DataBase/Models/Comments.model");
+const Post = require("../model/Posts.model");
+const Comment = require("../../../modules/comments/model/Comments.model");
 
 
 

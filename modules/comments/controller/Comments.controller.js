@@ -1,4 +1,4 @@
-const Comment = require("../../../DataBase/Models/Comments.model");
+const Comment = require("../model/Comments.model");
 
 
 const addcomment =  async (req, res) => {

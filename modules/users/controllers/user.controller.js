@@ -1,4 +1,4 @@
-const User = require("../../../DataBase/Models/users.model");
+const User = require("../model/users.model");
 const bcrypt = require("bcrypt");
 const multer = require('multer');
 const jwt = require("jsonwebtoken");
@@ -49,7 +49,6 @@ const Register =async(req,res)=>{
         }else{
             bcrypt.hash(password, 5, async function (err, hash) {
                 await User.insertMany({ name, email, password: hash,role })
-                
                 res.send("Register successfully")
             })
         }

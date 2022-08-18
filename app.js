@@ -5,7 +5,7 @@ require('dotenv').config();
 const multer = require("multer")
 router.use(express.json());
 
-const connection = require("./DataBase/Connection")
+const connection = require("./config/Connection")
 connection();
 
 const {userRouter,PostsRouter,CommentsRouter}= require("./Router/router")
@@ -17,5 +17,6 @@ router.get("/",(req,res)=>{
     res.send("hi")
 })
 
-const server =router.listen(process.env.PORT,()=>{
- console.log(`server is running on port ${process.env.PORT}`)})
+router.listen(3000,()=>{
+    console.log("server is listen on port 3000");
+})
