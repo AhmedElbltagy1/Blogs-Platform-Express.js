@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express();
-require('dotenv').config();
+require('dotenv').config()
 
 const multer = require("multer")
 router.use(express.json());
