@@ -1,22 +1,17 @@
-const express = require("express");
-const router = express();
 require('dotenv').config()
+const express = require("express");
+const app = express();
+const Port = process.env.PORT
 
-const multer = require("multer")
-router.use(express.json());
+//DataBase Connection
+require("./config/databases/db")();
 
-const connection = require("./config/Connection")
-connection();
+app.use(express.json());
+const PostsRoutes = require("./modules/Posts/routes/index")
+const userRoutes = require("./modules/users/routes/index");
 
-const {userRouter,PostsRouter,CommentsRouter}= require("./Router/router")
-router.use(userRouter,PostsRouter,CommentsRouter)
-
-router.use('/uploads',express.static('uploads'))
-
-router.get("/",(req,res)=>{
-    res.send("hi")
-})
-
-router.listen(3000,()=>{
-    console.log("server is listen on port 3000");
+app.use("/users", userRoutes);
+app.use("/posts", PostsRoutes);
+app.listen(Port,()=>{
+    console.log(`server is listen on port ${Port}`);
 })
