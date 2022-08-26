@@ -2,11 +2,14 @@ const express = require("express");
 const app = express.Router()
 
 const commentController = require("../controller/index")
-const isAuthorized = require("../../../config/Authorization/isAuthorized")
+const {CreateCommentSchema,updateCommentSchema} = require("../validation/index"); 
+const validateRequest = require("../../../config/validation/validateRequest")
+
+
 
 app
-.post("/",commentController.createcomment)
-.put("/:id",commentController.updatecomment)
+.post("/",validateRequest(CreateCommentSchema),commentController.createcomment)
+.put("/:id",validateRequest(updateCommentSchema),commentController.updatecomment)
 .delete("/:id",commentController.deletecomment)
 
 
