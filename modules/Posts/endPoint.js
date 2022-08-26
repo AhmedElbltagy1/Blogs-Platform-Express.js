@@ -1,16 +1,6 @@
-const GET_POSTS ="posts:geteUsers";
-const GET_POST ="posts:getUser";
-const UPDATE_POST ="posts:updateUser";
-const DELETE_POST ="posts:deleteUser";
 
+const UPDATE_POST ="posts:updatepost";
+const DELETE_POST ="posts:deletepost";
+const CREATE_POST ="posts:createpost"
 
-
-
-
-
-
-
-module.exports={
-    GET_POSTS,GET_POST,UPDATE_POST,DELETE_POST
-
-}
+module.exports= { UPDATE_POST,DELETE_POST,CREATE_POST }

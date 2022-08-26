@@ -4,18 +4,19 @@ const app = express.Router();
 const postController = require("../controller/index");
 const isAuthorized = require("../../../config/Authorization/isAuthorized");
 const validateRequest = require("../../../config/validation/validateRequest");
+const {updatepostSchema,CreatepostSchema} = require("../validation/index");
 
-const {GET_POSTS,
-    GET_POST,
+const {
     UPDATE_POST,
-    DELETE_POST
+    DELETE_POST,
+    CREATE_POST
  }= require("../endPoint")
 
 app
-.get("/",isAuthorized(GET_POSTS),postController.getPosts)
+.get("/",postController.getPosts)
 .get("/:id",postController.getPost)
-.post("/",postController.addPost)
-.put("/:id",isAuthorized(UPDATE_POST),postController.updatePost)
+.post("/",isAuthorized(CREATE_POST),validateRequest(CreatepostSchema),postController.addPost)
+.put("/:id",isAuthorized(UPDATE_POST),validateRequest(updatepostSchema),postController.updatePost)
 .delete("/:id",isAuthorized(DELETE_POST),postController.deletePost)
 
 

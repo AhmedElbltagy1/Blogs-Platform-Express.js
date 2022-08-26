@@ -1,12 +1,23 @@
 const PostModel = require("../model/post.mode")
+const CommentModel = require("../../comments/model/comment.model")
 
 exports.getPosts= async (req,res)=>{
+  
 try {
-    const posts = await PostModel.find();
-    const count = await PostModel.count();
+    const cursor = PostModel.find({}).cursor();
+    const count = PostModel.count();
+  
+    var newComments = [];
+    for( let doc = await cursor.next();doc!= null;doc = await cursor.next()){
+      const comment = await CommentModel.find({postID:doc._id})
+      
+      const obj = { ...doc._doc ,comment}
+      newComments.push(obj)
+
+    }
         res.status(200).json({
             message:"posts  ",
-            data: {posts,count}
+            data: newComments
         })
 } catch (error) {
     res.status(400).json({
@@ -36,8 +47,12 @@ exports.getPost = async (req,res)=>{
 }
 exports.addPost= async (req,res)=>{
     try {
-            const payload = req.body
-            const post = await PostModel.insertMany(payload)
+            const {title,description,picture} = req.body;
+            // console.log(req.user.name);
+            // const userID = req.user.id;
+              // console.log(req.user);
+            const post = await PostModel.insertMany({title,description,picture,creator:req.user.id})
+
             res.status(200).json({
                 message:"post created",
                 data:post
