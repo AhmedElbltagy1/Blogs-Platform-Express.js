@@ -5,14 +5,14 @@ const CreatepostSchema = {
 
     body: joi.object().required().keys({
 
-        title:joi.string().required(),
+        title: joi.string().required(),
+
         description:joi.string().optional(),
-        picture:joi.string().optional()
 
     })
 }
 const updatepostSchema = { 
-    params: joi.object().keys({
+    params: joi.object().required().keys({
 
         id: joi.string().required(),
             }),
@@ -20,7 +20,9 @@ const updatepostSchema = {
             body: joi.object().keys({
 
               title: joi.string().optional(),
+
               description: joi.number().optional(),
+
               picture: joi.string().optional(),
               
             }),

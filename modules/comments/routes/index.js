@@ -3,13 +3,13 @@ const app = express.Router()
 
 const commentController = require("../controller/index")
 const {CreateCommentSchema,updateCommentSchema} = require("../validation/index"); 
-const validateRequest = require("../../../config/validation/validateRequest")
+const validateSchema = require("../../../config/validation/validateSchema")
 
 
 
 app
-.post("/",validateRequest(CreateCommentSchema),commentController.createcomment)
-.put("/:id",validateRequest(updateCommentSchema),commentController.updatecomment)
+.post("/",validateSchema(CreateCommentSchema),commentController.createcomment)
+.put("/:id",validateSchema(updateCommentSchema),commentController.updatecomment)
 .delete("/:id",commentController.deletecomment)
 
 

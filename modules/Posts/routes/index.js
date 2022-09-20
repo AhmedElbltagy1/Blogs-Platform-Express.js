@@ -1,24 +1,30 @@
 const express = require("express");
-const app = express.Router();
+const router = express.Router();
+const multer = require('multer')
 
 const postController = require("../controller/index");
+
 const isAuthorized = require("../../../config/Authorization/isAuthorized");
-const validateRequest = require("../../../config/validation/validateRequest");
+
+const validateSchema = require("../../../config/validation/validateSchema");
+
 const {updatepostSchema,CreatepostSchema} = require("../validation/index");
 
-const {
-    UPDATE_POST,
-    DELETE_POST,
-    CREATE_POST
- }= require("../endPoint")
+const { UPDATE_POST, DELETE_POST, CREATE_POST }= require("../endPoint")
 
-app
-.get("/",postController.getPosts)
-.get("/:id",postController.getPost)
-.post("/",isAuthorized(CREATE_POST),validateRequest(CreatepostSchema),postController.addPost)
-.put("/:id",isAuthorized(UPDATE_POST),validateRequest(updatepostSchema),postController.updatePost)
-.delete("/:id",isAuthorized(DELETE_POST),postController.deletePost)
+const upload = require('../../../upload/imageUpload')
+
+router.get("/",postController.getPosts);
+
+router.get("/:id",postController.getPost);
+
+router.post("/",isAuthorized(CREATE_POST),validateSchema(CreatepostSchema),postController.CreatePost);
+
+router.put("/:id",isAuthorized(UPDATE_POST),validateSchema(updatepostSchema),postController.updatePost);
+
+router.delete("/:id",isAuthorized(DELETE_POST),postController.deletePost);
+
+router.put("/upload/:id",upload.single("image"),postController.uploadImage);
 
 
-
-module.exports=app
+module.exports=router

@@ -1,6 +1,6 @@
 const joi = require("joi");
 
-    const RegisterationSchema ={
+    const RegisterSchema ={
         body:joi.object().required().keys({
 
             name:joi.string().required(),
@@ -11,12 +11,9 @@ const joi = require("joi");
             password:joi.string().required().messages({
                 "string.empty":"Password can not be empty"
             }),
-            role:joi.string().required().messages({
-                "string.empty":"role can not be empty"
-            }),
+            role:joi.string()
         })
     }
-    
     const loginSchema = {
             
         body:joi.object().required().keys({
@@ -45,14 +42,4 @@ const joi = require("joi");
                 }),
             }    
             
-    // const getuserSchema ={
-    //     query: joi.object().keys({
-    //         name: joi.string().required(),
-    //     })
-    // }
-
-module.exports={
-
-    loginSchema,RegisterationSchema,updateUserSchema
-        
-    }
+module.exports = { loginSchema,RegisterSchema,updateUserSchema }

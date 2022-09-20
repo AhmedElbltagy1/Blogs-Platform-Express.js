@@ -1,25 +1,26 @@
-const app = require("express").Router();
+const router = require("express").Router();
+
 const userController= require("../controllers/index");
 
-const isAuthorized = require("../../../config/Authorization/isAuthorized")
-const validateRequest = require("../../../config/validation/validateRequest")
+const isAuthorized = require("../../../config/Authorization/isAuthorized");
 
-const {
-   loginSchema,RegisterationSchema,updateUserSchema
-      } = require("../validation/user.validation");
+const validateSchema = require("../../../config/validation/validateSchema");
 
- const {
-    GET_USERS,GET_USER,UPDATE_USER,DELETE_USER
- } = require("../endPoint");
+const { updateUserSchema } = require("../validation/user.validation");
+
+const { GET_USERS,GET_USER,UPDATE_USER,DELETE_USER } = require("../endPoint");
+
+const authRoutes = require('./auth');
+
  
- app
-.get("/:id",isAuthorized(GET_USER),userController.getUser)
-.get("/",isAuthorized(GET_USERS),userController.getUsers)
-.put("/:id",isAuthorized(UPDATE_USER),validateRequest(updateUserSchema),userController.updateUser)
-.delete("/:id",isAuthorized(DELETE_USER),userController.deleteUser)
-.post("/login",validateRequest(loginSchema),userController.login)
-.post("/register",validateRequest(RegisterationSchema),userController.register)
+ 
+ router.get("/:id",isAuthorized(GET_USER),userController.getUser)
+
+ router.get("/",isAuthorized(GET_USERS),userController.getUsers)
+
+ router.put("/:id",isAuthorized(UPDATE_USER),validateSchema(updateUserSchema),userController.updateUser)
+
+ router.delete("/:id",isAuthorized(DELETE_USER),userController.deleteUser)
 
 
-
-module.exports = app;
+module.exports = router;
