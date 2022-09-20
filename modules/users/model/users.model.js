@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const {Schema} = require('mongoose');
 const {roles} = require("../../../config/Helpers/roles");
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
     {
       name: {
         type: String,
@@ -30,13 +29,6 @@ const userSchema = new Schema(
       timestamps: true,
     }
   );
-
-
-
-
-
-
-
 
 const User = mongoose.model("user",userSchema);
 

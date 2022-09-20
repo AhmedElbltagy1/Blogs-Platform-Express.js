@@ -54,7 +54,7 @@ exports.CreatePost = async (req, res) => {
       ({
           title,
           description,
-          creator: req.user.id
+          
         })
     res.status(200).json({
       message: "post created",
@@ -117,11 +117,8 @@ exports.uploadImage = async (req, res) => {
     const postID = req.params.id
     await PostModel.updateOne({ _id: postID }, {
       $set: {
-      
         photo: `localhost:3000/${req.file.path}`,
-
       },
-
     })
     res.send("post is updated");
   } catch (error) {

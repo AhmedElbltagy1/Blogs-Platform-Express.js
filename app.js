@@ -22,4 +22,6 @@ app.use("/comments",commentsRoutes);
 
 app.use('/images', express.static('images'))
 
-app.listen(process.env.PORT)
+app.listen(process.env.PORT,()=>{
+    console.log("server is run");
+})
