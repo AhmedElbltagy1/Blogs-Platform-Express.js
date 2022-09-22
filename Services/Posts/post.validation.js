@@ -18,4 +18,4 @@ const updatepostSchema = {
               picture: joi.string().optional(),
             }),
 }
-module.exports = { updatepostSchema,CreatepostSchema}
+module.exports = { updatepostSchema , CreatepostSchema }

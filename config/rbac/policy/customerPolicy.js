@@ -1,4 +1,4 @@
-const { GET_USER } = require("../../../modules/users/endPoint");
+const { GET_USER } = require("../../../Services/users/endPoint");
 
 module.exports = {
     can :[

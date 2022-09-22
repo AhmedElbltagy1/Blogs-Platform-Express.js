@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router()
 
 
-const userRoutes = require('../modules/users/user.route');
-const PostsRoutes = require('../modules/Posts/post.route');
-const commentsRoutes = require('../modules/Posts/post.route');
+const userRoutes = require('../Services/users/user.route');
+const PostsRoutes = require('../Services/Posts/post.route');
+const commentsRoutes = require('../Services/Posts/post.route');
 
 
 // Routes Config:
