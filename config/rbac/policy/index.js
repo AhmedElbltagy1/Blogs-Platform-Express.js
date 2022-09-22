@@ -1,4 +1,4 @@
-const {roles} = require("../../Helpers/roles")
+const {roles} = require("../../../Helpers/roles")
 const adminPolicy = require("./adminPolicy")
 const customerPolicy = require("./customerPolicy")
 

@@ -1,5 +1,5 @@
-const PostModel = require("../model/post.mode")
-const CommentModel = require("../../comments/model/comment.model")
+const PostModel = require("./post.model")
+const CommentModel = require('../comments/comment.model')
 
 exports.getPosts = async (req, res) => {
 
@@ -47,21 +47,13 @@ exports.getPost = async (req, res) => {
 }
 exports.CreatePost = async (req, res) => {
   try {
-    const title   = req.body;
-    const description = req.body;
-
-    const post = await PostModel.insertMany
-      ({
-          title,
-          description,
-          
-        })
+    const {title}  = req.body;
+    const post = await PostModel.insertMany({title})
     res.status(200).json({
       message: "post created",
-      data: post
+      post
     })
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       message: "error happen while creating post",
       error
@@ -69,7 +61,6 @@ exports.CreatePost = async (req, res) => {
 
   }
 }
-
 exports.deletePost = async (req, res) => {
   try {
     const { id } = req.params;

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const {roles} = require("../../../config/Helpers/roles");
+const {roles} = require("../../Helpers/roles");
+const bycrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema(
     {
@@ -30,6 +31,11 @@ const userSchema = new mongoose.Schema(
     }
   );
 
-const User = mongoose.model("user",userSchema);
+// userSchema.pre("save", async function (next) {
+//     console.log("pre middleware");
+//     this.password = await bycrypt.hash(this.password,Number(process.env.SALT));
+//     next();
+//   })
+const userModel = mongoose.model("user",userSchema);
 
-module.exports = User;
+module.exports = userModel;

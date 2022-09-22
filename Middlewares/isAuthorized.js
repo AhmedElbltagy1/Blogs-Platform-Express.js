@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const rbac = require('../rbac/index');
+const rbac = require('../config/rbac/index');
 
 module.exports = (endPoint) => {
 
@@ -28,7 +28,7 @@ module.exports = (endPoint) => {
       next();
 
     } catch (error) {
-
+      
       return res.status(401).json
         ({
           message: 'you must login first ', error
