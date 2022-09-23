@@ -11,7 +11,7 @@ exports.getPosts = async () =>{
     return posts ,count ;
 }
 exports.getPost = async(post_id) =>{
-    const post = await PostModel.findById(post_id);
+    const post = await PostModel.findOne({post_id});
     return post;
 }
 exports.deletePost = async(post_id) =>{
@@ -21,4 +21,11 @@ exports.deletePost = async(post_id) =>{
 exports.updatePost = async (payload) => {
     const post = await PostModel.updateOne(payload)
     return post; 
+}
+exports.uploadimage = async (post_id) => {
+    return await PostModel.updateOne({post_id},{
+        $set: {
+            image: `localhost:3000/${req.file.path}`,
+            },
+    })
 }

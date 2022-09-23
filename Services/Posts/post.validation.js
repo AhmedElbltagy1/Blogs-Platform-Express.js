@@ -2,10 +2,10 @@ const joi = require("joi");
 
 
 const CreatepostSchema = {
-
     body: joi.object().required().keys({
         title: joi.string().required(),
         description:joi.string().optional(),
+        image:joi.string().optional()
     })
 }
 const updatepostSchema = { 

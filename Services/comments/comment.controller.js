@@ -1,59 +1,45 @@
-const CommentModel = require("./comment.model")
+const CommentService = require('./comment.service');
+const { ErrorHandler } = require("../../utils/error");
+const error = require('../../utils/errors');
 
 
-exports.createcomment = async (req,res)=>{
-    try {
-        const { content , postID, createdBy } = req.body;        
-        const newComment = await CommentModel.insertMany({content,postID,createdBy})
-        res.status(200).json({
-                message:"added",
-                newComment
-    })
-    } catch (error) {
-        console.log(error);
-        res.send(error)
-        
+exports.CreateComment = async (req, res,next) => {
+  try {
+    const Comment_info = req.body;
+    const newComment = await CommentService.CreateComment(Comment_info);
+
+    res.status(200).json({message: "Comment Created",newComment})
+  } catch (error) {
+        next(error)
+  }
+}
+exports.updatecomment = async (req, res) => {
+  try {
+    const Commenet_id = req.params;
+    const Comment_info = req.body;
+
+    const isExist = await CommentService.getComment(Commenet_id)
+    if (!isExist) {
+      throw new ErrorHandler(401,error.NOT_FOUND);
     }
-    
+    const updatedcomment = await CommentService.updateComment(Comment_info);
+    res.json({message: 'update comment success',data: updatedcomment});
+  } catch (error) {
+    next(error)
+  }
 }
-exports.updatecomment =async (req,res)=>{
-    try {
-        const { id } = req.params;
-        const updatePayload = req.body;
-        const comment = await CommentModel.findById(id);
-        if (!comment) {
-          throw new Error('comment not found');
-        }
-        const updatedcomment = await CommentModel.findByIdAndUpdate(id, updatePayload, {
-          new: true,
-        });
-        res.json({
-          message: 'update comment success',
-          data: updatedcomment,
-        });
-      } catch (error) {
-        res.status(404).json({
-          error: error.message,
-        });
-      }
-    
+exports.deletecomment = async (req, res) => {
+  try {
+    const Comment_id  = req.params;
 
-}
-exports.deletecomment = async (req,res)=>{
-    try {
-        const { id } = req.params;
-        const Comment = await CommentModel.findById(id);
-        if (!Comment) {
-          throw new Error('Comment not found');
-        }
-        await CommentModel.deleteOne({ _id: id });
-        res.json({
-          message: 'Comment deleted Successfully',
-        });
-      } catch (error) {
-        res.status(400).json({
-          error: error.message,
-        });
-      }
+    const Comment = await CommentService.getComment(Comment_id);
 
+    if (!isExist) {
+      throw new ErrorHandler(401,error.NOT_FOUND);
+    }
+    await CommentService.deleteComment(Comment_id )
+    res.json({message: 'Comment deleted Successfully',});
+  } catch (error) {
+    next(error)
+  }
 }

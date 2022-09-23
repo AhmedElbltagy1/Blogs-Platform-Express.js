@@ -10,7 +10,7 @@ const validateSchema = require("../../Middlewares/validateSchema")
 
 
 
-router.post("/",validateSchema(CreateCommentSchema),commentController.createcomment)
+router.post("/",validateSchema(CreateCommentSchema),commentController.CreateComment)
 router.put("/:id",validateSchema(updateCommentSchema),commentController.updatecomment)
 router.delete("/:id",commentController.deletecomment)
 

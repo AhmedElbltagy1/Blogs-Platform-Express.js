@@ -1,12 +1,13 @@
-const PostModel = require("./post.model")
-const CommentModel = require('../comments/comment.model')
+const CommentModel = require('../comments/comment.model');
 const PostService = require('./post.service');
+const { ErrorHandler } = require('../../utils/error');
+const error = require('../../utils/errors');
 
-exports.getPosts = async (req, res) => {
 
+exports.getPosts = async (req, res,next) => {
   try {
-    const cursor = PostService.getPosts();
-    const count = PostService.count();
+    const cursor =await PostService.getPosts();
+    const count =await PostService.count();
 
     var newComments = [];
     for (let doc = await cursor.next(); doc != null; doc = await cursor.next()) {
@@ -14,61 +15,46 @@ exports.getPosts = async (req, res) => {
 
       const obj = { ...doc._doc, comment }
       newComments.push(obj)
-
     }
     res.status(200).json({
       message: "posts  ",
       data: newComments
     })
   } catch (error) {
-    res.status(400).json({
-      message: "error occur",
-      error: error
-    })
-
+    next(error)
   }
 }
-exports.getPost = async (req, res) => {
+exports.getPost = async (req, res,next) => {
   try {
     const id = req.params;
     const isExist = await PostService.getPost(id)
     if (!isExist) {
 
-      throw new Error('post not found');
+      throw new ErrorHandler(401, error.NOT_FOUND);
     }
     res.json({
       message: 'Get post success',
       data: isExist,
     });
   } catch (error) {
-    res.status(404).json({
-      error: error.message,
-    });
+    next(error)
   }
-
 }
-exports.CreatePost = async (req, res) => {
+exports.CreatePost = async (req, res,next) => {
   try {
     const Post_info = req.body;
-
     const post = await PostService.createPost(Post_info)
-    res.status(200).json({
-      message: "post created",
-      post
-    })
+    res.status(200).json({ message: "post created", post })
   } catch (error) {
-    res.status(500).json({
-      message: "error happen while creating post",
-      error
-    })
+    next(error);
   }
 }
-exports.deletePost = async (req, res) => {
+exports.deletePost = async (req, res,next) => {
   try {
     const id = req.params;
     const isExist = await PostService.getPost(id);
     if (!isExist) {
-      throw new Error('post not found');
+      throw new ErrorHandler(401, error.NOT_FOUND);
     }
     if (req.user.id == isExist.id) {
       await PostService.deletePost(id)
@@ -77,46 +63,39 @@ exports.deletePost = async (req, res) => {
       message: 'post deleted Successfully',
     });
   } catch (error) {
-    res.status(400).json({
-      error: error.message,
-    });
+    next(error)
   }
-
 }
-exports.updatePost = async (req, res) => {
+exports.updatePost = async (req, res, next) => {
   try {
     const post_id = req.params;
     const Post_info = req.body;
+   
     const isExist = await PostService.getPost(post_id)
     if (!isExist) {
-      throw new Error('post not found');
+      throw new ErrorHandler(401,error.NOT_FOUND);
     }
-    if (req.user.id == isExist.id) {
       const updatedpost = await PostService.updatePost(Post_info)
       res.json({
         message: 'update post success',
         data: updatedpost,
       });
-    }
   } catch (error) {
-    res.status(404).json({
-      error: error.message,
-    });
+    next(error);
   }
-
 }
-exports.uploadImage = async (req, res) => {
+exports.uploadImage = async ( req, res , next) => {
   try {
-    const postID = req.params.id
-    await PostModel.updateOne({ _id: postID }, {
-      $set: {
-        photo: `localhost:3000/${req.file.path}`,
-      },
-    })
-    res.send("post is updated");
+    const post_id = req.params.id;
+    // await PostModel.updateOne({ _id: post_id }, {
+    //   $set: {
+    //     photo: `localhost:3000/${req.file.path}`,
+    //   },
+    // })
+    await PostService.updatePost({post_id})
+    res.json("post is updated");
   } catch (error) {
-    console.log(error);
-    res.json({ message: error })
+    next(error)
   }
 
 }

@@ -8,13 +8,3 @@ exports.createToken = (payload) => {
         throw new Error(401, err);
     }
 };
-
-
-exports.checkToken = (token) => {
-    try {
-        const checkingResult = jwt.verify(token, process.env.JWT_SECRET);
-        return checkingResult;
-    } catch (err) {
-        throw new Error(401, err);
-    }
-};
