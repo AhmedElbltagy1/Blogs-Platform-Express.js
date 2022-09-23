@@ -1,33 +1,37 @@
 const jwt = require('jsonwebtoken');
 const rbac = require('../config/rbac/index');
+const {checkToken} = require('../helpers/jwt');
+const {ErrorHandler} = require('../utils/error');
+const errors = require('../utils/errors')
+
 
 module.exports = (endPoint) => {
   return async (req, res, next) => {
     try {
       const Bareartoken = req.headers.authorization;
-      // let token = Bareartoken.split("")[1];
-      // const decodedtoken = jwt.verify(token,process.env.JWT_SECRET);
-
-      // if (!user) {
-      //   throw new Error('you are not Authorized');
-      // }
-      req.user = Bareartoken;
-      console.log(req.user.role);
-      const isAllowed = await rbac.can(req.user.role, endPoint);
-      
-      if (!isAllowed) {
-        return res.status(403).json({
-          message: 'You are not allowed to call this endpoint',
-        });
-      }else{
-        next();
+      if (!Bareartoken) {
+        throw new ErrorHandler(401, errors.TOKEN_NOT_AUTHENTICATED);
+    } else {
+      let splicedToken;
+      if (Bareartoken.startsWith("Bearer ")) {
+      // Remove Bearer from string
+          const spliced = Bareartoken.split(" ");
+          splicedToken = spliced[1];
+      }else {
+          splicedToken = Bareartoken;
       }
-      
+      let decoded_token = checkToken(splicedToken);
+      req.user=decoded_token
+      // console.log(req.user.payload.user_role);
+      const isAllowed = await rbac.can(req.user.payload.user_role, endPoint);
+      if (isAllowed) {
+        return next();
+      }else{
+        throw new ErrorHandler(401,errors.NOT_AUTHORIZED)
+      }
+      }
     } catch (error) {
-      return res.status(401).json
-        ({
-          message: 'you must login first ', error
-        });
-    }
-  };
+      next(error)
+   }
+ };
 };

@@ -8,7 +8,7 @@ const validateSchema = require("../../Middlewares/validateSchema");
 
 const {updatepostSchema,CreatepostSchema} = require("./post.validation");
 const upload = require('../../upload/imageUpload');
-
+const isAuthorized = require('../../Middlewares/isAuthorized')
 
 router.get("/",postController.getPosts);
 

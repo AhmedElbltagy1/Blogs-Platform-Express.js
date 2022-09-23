@@ -1,5 +1,5 @@
 const PostModel = require("./post.model");
-
+const path = require('path');
 
 exports.createPost = async (payload) => {
     const post = await PostModel.insertMany(payload);
@@ -21,11 +21,4 @@ exports.deletePost = async(post_id) =>{
 exports.updatePost = async (payload) => {
     const post = await PostModel.updateOne(payload)
     return post; 
-}
-exports.uploadimage = async (post_id) => {
-    return await PostModel.updateOne({post_id},{
-        $set: {
-            image: `localhost:3000/${req.file.path}`,
-            },
-    })
 }

@@ -6,5 +6,4 @@ exports.user_token = (user_id,user_name,user_email,user_role) => {
         user_email,
         user_role,
     };
-
 }

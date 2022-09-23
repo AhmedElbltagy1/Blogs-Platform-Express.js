@@ -16,9 +16,9 @@ router.post("/signin",validateSchema(loginSchema),userController.signin)
 
 router.post("/signup",validateSchema(RegisterSchema),userController.signup)
  
-router.get("/:id",isAuthorized(GET_USER),userController.getUser)
+router.get("/:id",isAuthorized(GET_USER),userController.getUser);
 
-router.get("/",isAuthorized(GET_USERS),userController.getUsers)
+router.get("/",isAuthorized(GET_USERS),userController.getUsers);
 
 router.put("/:id",isAuthorized(UPDATE_USER),userController.updateUser)
 

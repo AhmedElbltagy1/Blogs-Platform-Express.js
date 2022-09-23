@@ -1,7 +1,7 @@
 const userService = require('./user.service');
-const { comparePassword, hashPassword } = require("../../Helpers/bycrypt");
-const { createToken } = require('../../Helpers/jwt');
-const { user_token } = require('../../Helpers/tokens');
+const { comparePassword, hashPassword } = require("../../helpers/bycrypt");
+const { createToken } = require('../../helpers/jwt');
+const { user_token } = require('../../helpers/tokens');
 const { ErrorHandler } = require('../../utils/error');
 const error = require('../../utils/errors');
 
@@ -35,12 +35,8 @@ exports.updateUser = async (req, res ,next) => {
     if (!isExist) {
       throw new ErrorHandler(401,error.NOT_FOUND)
     }
-    if (req.user.id == isExist.id) {
       const Updateduser = await userService.updateUser(user_info);
       res.json({message: 'update user success',Updateduser});
-    } else {
-      throw new ErrorHandler(401,error.NOT_AUTHORIZED)
-    }
   } catch (error) {
     next(error)
   }
@@ -84,17 +80,18 @@ exports.signin = async (req, res,next) => {
   try {
     const isExist = await userService.getUser(user_info.email);
     if (!isExist) {
-        throw new ErrorHandler(401, error.NOT_AUTHENTICATED);
+        throw new ErrorHandler(401, error.NOT_FOUND);
     }
     // ensure password is correct
     const isCorrectPassword = await comparePassword(user_info.password, isExist.password);
     if (!isCorrectPassword) {
         throw new ErrorHandler(401, error.NOT_AUTHENTICATED);
     }
-    const token = createToken(user_token(user_info.id, user_info.name, user_info.email))
-    res.send({ message: 'User logged in Successfully', data: { token }, });
+    const token = createToken(user_token(isExist.id, isExist.name,isExist.email,isExist.role));
+    console.log(req.user);
+    res.send({ message: 'User logged in Successfully', data: token });
   } catch (error) {
-    next(err);
+    next(error);
   }
 };
 

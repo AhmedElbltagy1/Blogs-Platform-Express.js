@@ -1,4 +1,5 @@
 const CommentModel = require('../comments/comment.model');
+const PostModel = require('./post.model');
 const PostService = require('./post.service');
 const { ErrorHandler } = require('../../utils/error');
 const error = require('../../utils/errors');
@@ -87,13 +88,12 @@ exports.updatePost = async (req, res, next) => {
 exports.uploadImage = async ( req, res , next) => {
   try {
     const post_id = req.params.id;
-    // await PostModel.updateOne({ _id: post_id }, {
-    //   $set: {
-    //     photo: `localhost:3000/${req.file.path}`,
-    //   },
-    // })
-    await PostService.updatePost({post_id})
-    res.json("post is updated");
+    const post =await PostModel.updateOne({ _id: post_id }, {
+      $set: {
+        image: `localhost:3000/${req.file.path}`,
+      },
+    })
+    res.json({message:"post is updated",data: post });
   } catch (error) {
     next(error)
   }
