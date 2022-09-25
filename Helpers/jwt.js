@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
-const {ErrorHandler} = require("../utils/error");
+const {ErrorHandler} = require('../utils/error');
 
 exports.createToken = (payload) => {
     try {
-        const token = jwt.sign({payload},process.env.JWT_SECRET, { expiresIn: 500000 });
+        const token = jwt.sign({payload},process.env.JWT_SECRET, { expiresIn: '1h' });
         return token;
     } catch (err) {
         throw new ErrorHandler(401, err);

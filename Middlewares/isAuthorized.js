@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const rbac = require('../config/rbac/index');
+const rbac = require('../rbac/index');
 const {checkToken} = require('../helpers/jwt');
 const {ErrorHandler} = require('../utils/error');
 const errors = require('../utils/errors')

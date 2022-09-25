@@ -68,7 +68,7 @@ exports.signup = async (req, res,next) => {
       user_info.password = hashedPassword;
 
       const Createduser = await userService.addUser(user_info);
-      res.status(200).json({ message: 'user created', data: Createduser });
+      res.status(200).json({ message: "success", data: Createduser });
     }
   } catch (error) {
     next(error);
@@ -88,8 +88,7 @@ exports.signin = async (req, res,next) => {
         throw new ErrorHandler(401, error.NOT_AUTHENTICATED);
     }
     const token = createToken(user_token(isExist.id, isExist.name,isExist.email,isExist.role));
-    console.log(req.user);
-    res.send({ message: 'User logged in Successfully', data: token });
+    res.status(200).json({ message: "success", token: token });
   } catch (error) {
     next(error);
   }

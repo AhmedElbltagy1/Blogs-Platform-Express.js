@@ -5,12 +5,12 @@ const app = express();
 const RoutesSettings = require("./startup/RoutesSettings");
 
 
-RoutesSettings(app);
+
 // DataBase Connection
 require("./startup/db")();
 
-app.use(express.json());
 
+RoutesSettings(app);
 app.use(require('./startup/router'));
 app.use('/images', express.static('images'))
 
