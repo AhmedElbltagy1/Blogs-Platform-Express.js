@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const userController= require("./user.controller");
 
-const isAuthorized = require("../../Middlewares/isAuthorized");
+const is_Auth = require("../../Middlewares/is-Auth");
 
 const validateSchema = require("../../Middlewares/validateSchema");
 
@@ -16,13 +16,13 @@ router.post("/signin",validateSchema(loginSchema),userController.signin)
 
 router.post("/signup",validateSchema(RegisterSchema),userController.signup)
  
-router.get("/:id",isAuthorized(GET_USER),userController.getUser);
+router.get("/:id",is_Auth(GET_USER),userController.getUser);
 
-router.get("/",isAuthorized(GET_USERS),userController.getUsers);
+router.get("/",is_Auth(GET_USERS),userController.getUsers);
 
-router.put("/:id",isAuthorized(UPDATE_USER),userController.updateUser)
+router.put("/:id",is_Auth(UPDATE_USER),userController.updateUser)
 
-router.delete("/:id",isAuthorized(DELETE_USER),userController.deleteUser)
+router.delete("/:id",is_Auth(DELETE_USER),userController.deleteUser)
 
 
 module.exports = router;

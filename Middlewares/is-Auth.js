@@ -8,7 +8,7 @@ const errors = require('../utils/errors')
 module.exports = (endPoint) => {
   return async (req, res, next) => {
     try {
-      const Bareartoken = req.headers.authorization;
+      const Bareartoken = req.get("Authorization");
       if (!Bareartoken) {
         throw new ErrorHandler(401, errors.TOKEN_NOT_AUTHENTICATED);
     } else {
