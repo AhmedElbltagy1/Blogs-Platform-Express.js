@@ -3,7 +3,7 @@ const expect = require('chai').expect;
 const User = require('../Services/users/user.model')
 
 
-describe('Users Controller - Login',function(){
+describe('Users Controller - Login', function() {
     it('should throw an error with code 500 if accessing the database fails', function(done) {
         sinon.stub(User, 'findOne');
         User.findOne.throws();
