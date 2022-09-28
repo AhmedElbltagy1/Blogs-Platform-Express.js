@@ -12,3 +12,6 @@ RoutesSettings(app);
 app.use(require('./startup/router'));
 app.use('/images', express.static('images'))
 
+app.listen(process.env.PORT,()=>{
+    console.log(`server is listen on port ${process.env.PORT}`);
+})
