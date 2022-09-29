@@ -5,9 +5,9 @@ In this project, users must register first to use the platform features like cre
 ### client role :
 - clients can ( creates , updates or deletes their posts or comments )
 - clients cannot (updates or deletes others posts or comments )
-- clients cannot ( Get users of the platform )
+- clients cannot ( Get users of the platform only get their account )
 
 ### Admin role :
-- admins can perform all the features that client can make and more like 
+- admins can perform all the functions that client can make and more like ... 
 - Get all the users registerd on the platform 
 - can delete any user or update it
