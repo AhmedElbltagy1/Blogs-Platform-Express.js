@@ -1,12 +1,12 @@
 const {roles} = require("../../helpers/roles");
 const adminPolicy = require('./adminPolicy')
-const customerPolicy = require('./customerPolicy')
+const clientPolicy = require('./clientPolicy')
 
 
 
 const options = {
     [roles.ADMIN] : adminPolicy,
-    [roles.CUSTOMER]: customerPolicy,
+    [roles.CLIENT]: clientPolicy,
 
 }
 module.exports= options

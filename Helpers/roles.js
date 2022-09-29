@@ -1,5 +1,5 @@
 const roles={
     ADMIN:"admin",
-    CUSTOMER:"customer"
+    CLIENT:"client"
 };
 module.exports={roles}

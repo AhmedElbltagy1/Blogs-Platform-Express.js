@@ -1,3 +1,13 @@
-# social media application .
-social media application ,with Authorization roles,the admin have all the ordinary permissions and to updata,delete,getting all users of the applications , the second role is customer role that have permission to create post and comments and update and delete only there posts or commments 
+# Blogs Platform BackEnd 
+In this project, users must register first to use the platform features like create post , update posts they have created or delete it or make comments on others posts and update or delete the comments .
 
+## Roles on the platform
+### client role :
+- clients can ( creates , updates or deletes their posts or comments )
+- clients cannot (updates or deletes others posts or comments )
+- clients cannot ( Get users of the platform )
+
+### Admin role :
+- admins can perform all the features that client can make and more like 
+- Get all the users registerd on the platform 
+- can delete any user or update it
