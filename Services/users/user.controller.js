@@ -4,6 +4,7 @@ const { createToken } = require('../../helpers/jwt');
 const { user_token } = require('../../helpers/tokens');
 const { ErrorHandler } = require('../../utils/error');
 const error = require('../../utils/errors');
+const logger = require('../../config/logger');
 
 exports.getUsers = async (req, res ,next) => {
   try {
@@ -72,6 +73,7 @@ exports.signup = async (req, res,next) => {
     }
   } catch (error) {
     next(error);
+    logger.log('error',error);
   }
 }
 
@@ -91,6 +93,7 @@ exports.signin = async (req, res,next) => {
     res.status(200).json({ message: "success", token: token });
   } catch (error) {
     next(error);
+    logger.log('error',error);
   }
 };
 

@@ -2,7 +2,7 @@ const express = require("express");
 require('dotenv').config();
 const RoutesSettings = require("./startup/RoutesSettings");
 const app = express();
-const logger = require('./config/logger')();
+const logger = require('./config/logger');
 
 
 // DataBase Connection
