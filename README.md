@@ -11,3 +11,7 @@ In this project, users must register first to use the platform features like cre
 - admins can perform all the functions that client can make and more like ... 
 - Get all the users registerd on the platform 
 - can delete any user or update it
+
+### Start :
+- npm install 
+- npm start 
