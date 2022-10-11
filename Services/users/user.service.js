@@ -18,5 +18,5 @@ exports.deleteUser = async (user_id) => {
 }
 exports.addUser = async (User_info)=>{
     const user = await userModel.insertMany(User_info);
-    return user.dataValues;
+    return user;
 }
