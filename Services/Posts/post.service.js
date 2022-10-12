@@ -7,8 +7,7 @@ exports.createPost = async (payload) => {
 }
 exports.getPosts = async () =>{
     const posts = await PostModel.find({}).cursor();
-    const count = PostModel.count();
-    return posts ,count ;
+    return posts ;
 }
 exports.getPost = async(post_id) =>{
     const post = await PostModel.findOne({post_id});

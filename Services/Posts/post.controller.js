@@ -8,8 +8,6 @@ const error = require('../../utils/errors');
 exports.getPosts = async (req, res,next) => {
   try {
     const cursor =await PostService.getPosts();
-    const count =await PostService.count();
-
     var newComments = [];
     for (let doc = await cursor.next(); doc != null; doc = await cursor.next()) {
       const comment = await CommentModel.find({ postID: doc._id })

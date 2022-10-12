@@ -1,6 +1,6 @@
 const bodyParser = require("body-parser");
 
-module.exports = (app)=>{
+module.exports = (app) => {
      // Body Parser Settings: 
    app.use(bodyParser.json());
     // Required Headers: 
