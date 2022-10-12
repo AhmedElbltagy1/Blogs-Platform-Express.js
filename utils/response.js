@@ -5,5 +5,4 @@ const responseWith = (status, statusCode, data, res) => {
         data,
     });
 };
-
 module.exports = responseWith;

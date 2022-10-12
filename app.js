@@ -12,6 +12,9 @@ require("./startup/db")();
 RoutesSettings(app);
 app.use(require('./startup/router'));
 app.use('/images', express.static('images'))
+app.listen(Port, ()=>{
+    console.log(`Server is listening on Port ${Port}`);
+});
 
-// app.listen(Port)
 
+module.exports =app ;

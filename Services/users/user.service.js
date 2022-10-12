@@ -12,8 +12,8 @@ exports.updateUser = async (payload) => {
     const user  = await userModel.updateOne(payload)
     return user 
 }
-exports.deleteUser = async (user_id) => {
-    const user = await userModel.deleteOne({user_id});
+exports.deleteUser = async (user_email) => {
+    const user = await userModel.deleteOne({email:user_email});
     return user 
 }
 exports.addUser = async (User_info)=>{

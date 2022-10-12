@@ -14,16 +14,15 @@ try {
     // ensure that user not already exist 
     const isExist = await userService.getUser(user_info.email)
     if (isExist) {
-        throw new ErrorHandler(401, error.ALREADY_EXIST)
+        throw new ErrorHandler(409, error.ALREADY_EXIST)
     };
     // hash the user password
     const hashedPassword = await hashPassword(user_info.password);
     user_info.password = hashedPassword;
     // add the user
-    const Createduser = await userService.addUser(user_info);
+    const createdUser = await userService.addUser(user_info);
     // send the response
-      // res.status(200).json({ message: "success", data: Createduser });
-    return responseWith(true,201,{...Createduser},res)
+    return responseWith(true,201,createdUser,res)
 }catch (error) {
     next(error);
   }
@@ -44,12 +43,12 @@ try {
     }
     // generate a token for the user
     const token = createToken(user_token(isExist.id, isExist.name, isExist.email, isExist.role));
+    
     // send the response:
-    return responseWith(true, 200, { ...isExist, token }, res)
-    // res.status(200).json({ message: "success", token: token });
+    return responseWith(true, 200, {isExist, token}, res)
+
 }catch (error) {
-    return error
-    // next(error)
+    next(error)
   }
 };
 

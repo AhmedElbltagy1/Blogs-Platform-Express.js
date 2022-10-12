@@ -10,7 +10,7 @@ const validateSchema = (schema) => {
         validation.push(validationResult.error.details[0].message)
       }
       if (validation.length) {
-        res.json({message:validation.join()})
+        res.status(400).json({message:validation.join()})
         return
       }
       next();
