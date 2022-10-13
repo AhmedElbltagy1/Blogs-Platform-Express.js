@@ -30,4 +30,7 @@ RoutesSettings(app);
 app.use(require('./startup/router'));
 app.use('/images', express.static('images'));
 
+app.listen(Port,()=>{
+    console.log(`server is listen on port ${Port}`);
+})
 module.exports =app ;

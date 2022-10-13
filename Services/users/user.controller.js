@@ -4,7 +4,7 @@ const { createToken } = require('../../helpers/jwt');
 const { user_token } = require('../../helpers/tokens');
 const { ErrorHandler } = require('../../utils/error');
 const error = require('../../utils/errors');
-const responseWith = require('../../utils/response');
+const response = require('../../utils/response');
 
 
 
@@ -22,7 +22,7 @@ try {
     // add the user
     const createdUser = await userService.addUser(user_info);
     // send the response
-    return responseWith(true,201,createdUser,res)
+    return response(true,201,createdUser,res)
 }catch (error) {
     next(error);
   }
@@ -45,7 +45,7 @@ try {
     const token = createToken(user_token(isExist.id, isExist.name, isExist.email, isExist.role));
     
     // send the response:
-    return responseWith(true, 200, {isExist, token}, res)
+    return response(true, 200, {isExist, token}, res)
 
 }catch (error) {
     next(error)

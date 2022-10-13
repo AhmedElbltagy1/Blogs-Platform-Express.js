@@ -1,36 +1,30 @@
 const jwt = require('jsonwebtoken');
-const rbac = require('../rbac/index');
 const {checkToken} = require('../helpers/jwt');
 const {ErrorHandler} = require('../utils/error');
 const errors = require('../utils/errors')
 
 
-module.exports = (endPoint) => {
+module.exports = () => {
   return async (req, res, next) => {
-    try {
-      const Bareartoken = req.get("Authorization");
-      if (!Bareartoken) {
+try{
+    const barearToken = req.headers.authorization;
+    if(!barearToken) {
         throw new ErrorHandler(401, errors.TOKEN_NOT_AUTHENTICATED);
-    } else {
+    }else {
       let splicedToken;
-      if (Bareartoken.startsWith("Bearer ")) {
+      if (barearToken.startsWith("Bearer")) {
       // Remove Bearer from string
-          const spliced = Bareartoken.split(" ");
+          const spliced = barearToken.split(" ");
           splicedToken = spliced[1];
       }else {
-          splicedToken = Bareartoken;
+          splicedToken = barearToken;
       }
       let decoded_token = checkToken(splicedToken);
-      req.user=decoded_token
-      // console.log(req.user.payload.user_role);
-      const isAllowed = await rbac.can(req.user.payload.user_role, endPoint);
-      if (isAllowed) {
-        return next();
-      }else{
-        throw new ErrorHandler(401,errors.NOT_AUTHORIZED)
+      req.user = decoded_token
+
+      return next();
       }
-      }
-    } catch (error) {
+}catch (error) {
       next(error)
    }
  };

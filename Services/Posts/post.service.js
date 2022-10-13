@@ -1,8 +1,8 @@
 const PostModel = require("./post.model");
 const path = require('path');
 
-exports.createPost = async (payload) => {
-    const post = await PostModel.insertMany(payload);
+exports.createPost = async (postCreator,postInfo) => {
+    const post = await PostModel.insertMany({creator:postCreator,title:postInfo.title,description:postInfo.description});
     return post;
 }
 exports.getPosts = async () =>{

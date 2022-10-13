@@ -30,10 +30,5 @@ const userSchema = new mongoose.Schema(
       timestamps: true,
     }
   );
-// userSchema.pre("save", async function (next) {
-//     console.log("pre middleware");
-//     this.password = await bycrypt.hash(this.password,Number(process.env.SALT));
-//     next();
-//   })
 const userModel = mongoose.model("user",userSchema);
 module.exports = userModel;
