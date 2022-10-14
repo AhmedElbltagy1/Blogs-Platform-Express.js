@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
       },
       role: {
         type: String,
-        default: roles.CUSTOMER
+        required:true
       }
     },
     {

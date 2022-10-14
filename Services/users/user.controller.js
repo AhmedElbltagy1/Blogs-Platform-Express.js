@@ -51,6 +51,14 @@ try {
     next(error)
   }
 };
+exports.getUsers = async ( req , res , next) =>{
+try{
+    const users = await userService.getUsers()
+    return response(true,200,users,res)
+}catch (error) {
+  next(error);
+}
+}
 
 
 

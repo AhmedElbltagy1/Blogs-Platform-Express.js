@@ -22,15 +22,14 @@ try{
   }
 }
 exports.getPost = async (req, res,next) => {
-  try {
+try{
     const id = req.params;
     const isExist = await PostService.getPost(id)
     if (!isExist) {
-
       throw new ErrorHandler(401, error.NOT_FOUND);
     }
     return response(true,200,isExist,res)
-  } catch (error) {
+}catch (error) {
     next(error)
   }
 }
@@ -38,7 +37,7 @@ exports.getPost = async (req, res,next) => {
 exports.createPost = async (req, res,next) => {
 try {
     const postInfo = req.body;
-    const postCreator = req.user.payload.user_id;
+    const postCreator = req.user.user_id;
     // create post 
     const post = await PostService.createPost(postCreator,postInfo)
     // send response
@@ -54,14 +53,14 @@ try {
     // find the post
     const isExist = await PostService.getPost(id);
     // check that the requester is the creator of the post
-    if (req.user.payload.user_id == isExist.id) {
+    if (req.user.user_id == isExist.creator) {
     // delete the post 
     await PostService.deletePost(id)
     // send the response 
     return response(true,200,"delete successfully",res)
     }
     // throw error if post not found
-    throw new ErrorHandler(400,error.NOT_FOUND)
+    throw new ErrorHandler(400,error.NOT_AUTHORIZED)
 }catch (error) {
     next(error)
   }
@@ -80,22 +79,21 @@ try {
     return response(true,200,updatedpost,res)
     }
     // throw error if the post not found
-    throw new ErrorHandler(401,error.NOT_FOUND);
+    throw new ErrorHandler(401,error.NOT_AUTHORIZED);
 }catch (error) {
     next(error);
   }
 }
 exports.uploadImage = async ( req, res , next) => {
-  try {
+try{
     const post_id = req.params.id;
-    const post =await PostModel.updateOne({ _id: post_id }, {
+    const post = await PostModel.updateOne({ _id: post_id }, {
       $set: {
-        image: `localhost:3000/${req.file.path}`,
+        image: `${process.env.IMAGEPATH}/${req.file.path}`,
       },
     })
-    res.json({message:"post is updated",data: post });
-  } catch (error) {
+    return response(true,200,post,res)
+}catch(error){
     next(error)
   }
-
 }

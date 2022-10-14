@@ -1,44 +1,44 @@
 const CommentService = require('./comment.service');
 const { ErrorHandler } = require("../../utils/error");
 const error = require('../../utils/errors');
+const { response } = require('express');
 
 
-exports.CreateComment = async (req, res,next) => {
-  try {
+exports.createComment = async (req, res,next) => {
+try{
     const Comment_info = req.body;
     const newComment = await CommentService.CreateComment(Comment_info);
-
-    res.status(200).json({message: "Comment Created",newComment})
-  } catch (error) {
-        next(error)
+    return response(true,200,newComment,res)
+}catch (error) {
+    next(error)
   }
 }
-exports.updatecomment = async (req, res) => {
-  try {
+exports.updateComment = async (req, res) => {
+try{
     const Commenet_id = req.params;
     const Comment_info = req.body;
-
+    // find the comment
     const isExist = await CommentService.getComment(Commenet_id)
     if (!isExist) {
       throw new ErrorHandler(401,error.NOT_FOUND);
     }
+    // update comment
     const updatedcomment = await CommentService.updateComment(Comment_info);
-    res.json({message: 'update comment success',data: updatedcomment});
-  } catch (error) {
-    next(error)
+    // send response
+    return response(true,200,updatedcomment,res)
+}catch (error) {
+  next(error)
   }
 }
-exports.deletecomment = async (req, res) => {
+exports.deleteComment = async (req, res) => {
   try {
     const Comment_id  = req.params;
-
     const Comment = await CommentService.getComment(Comment_id);
-
     if (!isExist) {
       throw new ErrorHandler(401,error.NOT_FOUND);
     }
     await CommentService.deleteComment(Comment_id )
-    res.json({message: 'Comment deleted Successfully',});
+    return response(true,200,"deleted",res)
   } catch (error) {
     next(error)
   }

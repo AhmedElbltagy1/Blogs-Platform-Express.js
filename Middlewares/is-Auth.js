@@ -20,8 +20,8 @@ try{
           splicedToken = barearToken;
       }
       let decoded_token = checkToken(splicedToken);
-      req.user = decoded_token
-
+      // attach the user to the job routes
+      req.user = decoded_token.payload
       return next();
       }
 }catch (error) {

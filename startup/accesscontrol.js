@@ -5,12 +5,15 @@ const ac = new AccessControl();
 ac.grant('user')
     .createOwn('posts') 
     .deleteOwn('posts')
-    .readAny('posts')
+    .readAny("posts")
+    
 
     .grant('admin')
     .extend('user')
-    .updateAny('posts')  // explicitly defined attributes
+    .updateAny('posts')  
     .deleteAny('posts')
+    .readAny("users",['*','!password']);
+    
     
 
 module.exports = ac ;

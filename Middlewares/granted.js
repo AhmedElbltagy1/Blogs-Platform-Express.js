@@ -5,7 +5,7 @@ const errors = require("../utils/errors");
 module.exports = (action,resource)=>{
     return (req,res,next)=>{
         try {
-            let role = req.user.payload.user_role;
+            let role = req.user.user_role;
             const isGranted = roles.can(role)[action](resource).granted;
             if (isGranted){
                 next();
