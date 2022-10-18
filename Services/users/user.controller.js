@@ -33,7 +33,7 @@ try {
     const user_info = req.body;
     // check that the email is exist
     const isExist = await userService.getUser(user_info.email);
-    if (!isExist) {
+    if (!isExist){
       throw new ErrorHandler(401, error.NOT_FOUND);
     }
     // ensure password is correct
@@ -42,10 +42,10 @@ try {
       throw new ErrorHandler(401, error.NOT_AUTHENTICATED);
     }
     // generate a token for the user
-    const token = createToken(user_token(isExist.id, isExist.name, isExist.email, isExist.role));
+    const token= createToken(user_token(isExist.id, isExist.name, isExist.email, isExist.role));
     
     // send the response:
-    return response(true, 200, {isExist, token}, res)
+    return response(true, 200, {...isExist, token }, res)
 
 }catch (error) {
     next(error)
