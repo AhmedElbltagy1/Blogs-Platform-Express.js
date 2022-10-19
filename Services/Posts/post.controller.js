@@ -36,11 +36,14 @@ try{
 
 exports.createPost = async (req, res,next) => {
 try {
-    const postInfo = req.body;
-    const postCreator = req.user.user_id;
-    // create post 
-    const post = await PostService.createPost(postCreator,postInfo)
-    // send response
+    const {title }= req.body;
+    const {description} = req.body;
+    const post = await PostModel.insertMany({
+      title,
+      description,
+      creator:req.user.user_id,
+      imageUrl:req.file.path
+    })
     return response(true,200,post,res)
 }catch (error) {
     next(error);
@@ -82,18 +85,5 @@ try {
     throw new ErrorHandler(401,error.NOT_AUTHORIZED);
 }catch (error) {
     next(error);
-  }
-}
-exports.uploadImage = async ( req, res , next) => {
-try{
-    const post_id = req.params.id;
-    const post = await PostModel.updateOne({ _id: post_id }, {
-      $set: {
-        image: `${process.env.IMAGEPATH}/${req.file.path}`,
-      },
-    })
-    return response(true,200,post,res)
-}catch(error){
-    next(error)
   }
 }
