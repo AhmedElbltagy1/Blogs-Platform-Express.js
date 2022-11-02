@@ -43,7 +43,7 @@ try {
     }
     // generate a token for the user
     const token= createToken(user_token(isExist.id, isExist.name, isExist.email, isExist.role));
-    
+
     // send the response:
     return response(true, 200, {...isExist, token }, res)
 

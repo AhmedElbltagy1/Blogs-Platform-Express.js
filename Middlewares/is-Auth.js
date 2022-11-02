@@ -21,7 +21,7 @@ try{
       }
       let decoded_token = checkToken(splicedToken);
       // attach the user to the job routes
-      req.user = decoded_token.payload
+      req.user = decoded_token.payload;
       return next();
       }
 }catch (error) {

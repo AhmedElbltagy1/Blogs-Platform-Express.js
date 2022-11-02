@@ -1,13 +1,11 @@
 const PostModel = require("./post.model");
-const path = require('path');
 
-exports.createPost = async (creator,title,description,imageUrl) => {
-    const post = await PostModel.insertMany({
-        creator,
-        title:title,
-        description,
-        imageUrl
-    });
+
+
+
+
+exports.createPost = async (user_id,Post_info) => {
+    const post = await PostModel.create({ creator: user_id,...Post_info})
     return post;
 }
 exports.getPosts = async () =>{
@@ -15,14 +13,14 @@ exports.getPosts = async () =>{
     return posts ;
 }
 exports.getPost = async(post_id) =>{
-    const post = await PostModel.findOne({post_id});
+    const post = await PostModel.findById(post_id)
     return post;
 }
 exports.deletePost = async(post_id) =>{
-    const post = await PostModel.deleteOne(post_id);
+    const post = await PostModel.deleteOne({_id:post_id});
     return post;
 }
-exports.updatePost = async (payload) => {
-    const post = await PostModel.updateOne(payload)
+exports.updatePost = async (id,payload) => {
+    const post = await PostModel.updateOne({_id:id},payload)
     return post; 
 }

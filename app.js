@@ -9,11 +9,13 @@ const RoutesSettings = require("./startup/RoutesSettings");
 const Port = process.env.PORT || 3000;
 const helmet = require('helmet');
 const morgan = require('morgan');
+const multer = require('multer');
 
 // database connection
 require("./startup/db")();
 // routes settings
 RoutesSettings(app);
+
 app.use(require('./startup/router'));
 app.use('/images', express.static('images'));
 

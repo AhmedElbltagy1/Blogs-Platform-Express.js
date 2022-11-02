@@ -15,7 +15,7 @@ const updatepostSchema = {
             }),
             body: joi.object().keys({
               title: joi.string().optional(),
-              description: joi.number().optional(),
+              description: joi.string().optional(),
               picture: joi.string().optional(),
             }),
 }
